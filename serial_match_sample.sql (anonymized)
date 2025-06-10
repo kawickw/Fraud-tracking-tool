@@ -1,0 +1,9 @@
+SELECT 
+    input.serial_id,
+    ref.case_code,
+    ref.amount_flagged,
+    ref.flagged_date
+FROM user_input input
+JOIN reference_cases ref
+  ON input.serial_id = ref.serial_id
+WHERE ref.status = 'Open';
