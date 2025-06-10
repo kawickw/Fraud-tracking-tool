@@ -1,0 +1,11 @@
+SELECT 
+    user_id,
+    case_type,
+    MIN(flagged_date) AS first_flagged,
+    MAX(flagged_date) AS last_flagged,
+    DATEDIFF(DAY, MIN(flagged_date), MAX(flagged_date)) AS duration_days
+FROM investigation_flags
+WHERE case_type IN ('A', 'B', 'C')
+  AND (source_tag = 'TAGGED' OR source_tag IS NULL)
+GROUP BY user_id, case_type
+HAVING COUNT(DISTINCT flagged_date) > 1;
